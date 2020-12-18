@@ -7,15 +7,24 @@ namespace PizzaWorld.Client
 {
     class Program
     {
+        private static readonly ClientSingleton _client = ClientSingleton.Instance;
+
+        /*
+        public Program()
+        {
+            _client = new ClientSingleton.Instance;
+        }
+        */
+
         static void Main(string[] args)
         {
-            var cs = ClientSingleton.Instance;
+            //var cs = ClientSingleton.Instance; // want avilable during the runtime
             
-            cs.MakeAStore();
+            _client.MakeAStore();
 
-            //PrintAllStores();
+            PrintAllStores();
         }
-
+        /*
         static IEnumerable<Store> GetAllStores()
         {
             return new List<Store>()
@@ -23,11 +32,13 @@ namespace PizzaWorld.Client
                 new Store(), // C# allows you to do this (adds one Store object to the List)
                 new Store()
             };
+            
         }
+        */
 
         static void PrintAllStores()
         {
-            foreach(var store in GetAllStores())
+            foreach(var store in _client.Stores)
             {
                 System.Console.WriteLine(store);
             }
