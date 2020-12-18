@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System;
 
 namespace PizzaWorld.Domain.Models // the point is to be specific as to where the code is
 {
@@ -15,10 +16,10 @@ namespace PizzaWorld.Domain.Models // the point is to be specific as to where th
 
         void CreateOrder()
         {
-            Orders.add(new Order());
+            Orders.Add(new Order());
         }
 
-        void DeleteOrder(Order order) // "tell me what to delete"
+        bool DeleteOrder(Order order) // "tell me what to delete"
         {
             try
             {

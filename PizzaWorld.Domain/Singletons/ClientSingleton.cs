@@ -1,12 +1,16 @@
 using System.IO;
 using System.Collections.Generic;
+using System.Xml.Serialization;
 using PizzaWorld.Domain.Models;
 
 namespace PizzaWorld.Domain.Singletons
 {
     public class ClientSingleton
     {
-        private static ClientSingleton _instance; // TODO - look into why this should be static (this was the last step to create a singleton)
+        // singleton (which is a creational design pattern) - static on the creation part (which is the _instance and Instance) (only one instance for each one)
+        // using static on the class (only one of) would force us to make everything static
+
+        private static ClientSingleton _instance;
         public static ClientSingleton Instance
         {
             get
