@@ -1,4 +1,6 @@
+using System;
 using System.IO;
+using System.Linq;
 using System.Collections.Generic;
 using System.Xml.Serialization;
 using PizzaWorld.Domain.Models;
@@ -45,6 +47,18 @@ namespace PizzaWorld.Domain.Singletons
 
             Stores.Add(s);
             Save();
+        }
+
+        public Store SelectStore()
+        {
+            int.TryParse(Console.ReadLine(), out int input); // 0 or selection
+            // if we just had Parse instead of TryParse - you will either get the result or 0
+
+            //Stores.FirstOrDefault(s => s == input); // assumption - unipe property and user gave the right input/info
+            // the above line forces you to edit the store class
+            return Stores.ElementAtOrDefault(input); // null if there are no stores in the list
+            
+            //Stores[input]; // exception (indexing is expecting a number)
         }
 
         private void Save()

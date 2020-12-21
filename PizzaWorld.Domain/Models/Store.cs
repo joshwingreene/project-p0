@@ -14,7 +14,7 @@ namespace PizzaWorld.Domain.Models // the point is to be specific as to where th
         - delete
         */
 
-        void CreateOrder()
+        public void CreateOrder()
         {
             Orders.Add(new Order());
         }

@@ -20,9 +20,14 @@ namespace PizzaWorld.Client
         {
             //var cs = ClientSingleton.Instance; // want avilable during the runtime
             
-            _client.MakeAStore();
+            //_client.MakeAStore();
 
+            /*
             PrintAllStores();
+            System.Console.WriteLine(_client.SelectStore());
+            */
+
+            UserView();
         }
         /*
         static IEnumerable<Store> GetAllStores()
@@ -42,6 +47,22 @@ namespace PizzaWorld.Client
             {
                 System.Console.WriteLine(store);
             }
+        }
+
+        static void UserView()
+        {
+            var user = new User();
+
+            PrintAllStores();
+            
+            user.SelectedStore = _client.SelectStore();
+            user.SelectedStore.CreateOrder();
+            user.Orders.Add(user.SelectedStore.Orders.Last()); // last because the above line just created a new order
+            // while loop (user user.SelectPizza() until the user says no more pizza)
+            user.Orders.Last().MakeMeatPizza();
+            user.Orders.Last().MakeMeatPizza();
+
+            System.Console.WriteLine(user);
         }
     }
 }
