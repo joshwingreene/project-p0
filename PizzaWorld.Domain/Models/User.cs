@@ -1,4 +1,6 @@
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 
 namespace PizzaWorld.Domain.Models // the point is to be specific as to where the code is
 {
@@ -6,17 +8,18 @@ namespace PizzaWorld.Domain.Models // the point is to be specific as to where th
     {
         public List<Order> Orders { get; set; }
 
+        public Store SelectedStore { get; set; }
+
         public User()
         {
             Orders = new List<Order>();
         }
-        public Store SelectedStore { get; set; }
 
         public override string ToString()
         {
             var sb = new StringBuilder();
 
-            foreach(var p in Orders.Last().Pizza)
+            foreach(var p in Orders.Last().Pizzas)
             {
                 sb.AppendLine(p.ToString());
             }

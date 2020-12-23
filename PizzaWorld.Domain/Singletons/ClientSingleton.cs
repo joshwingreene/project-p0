@@ -21,7 +21,7 @@ namespace PizzaWorld.Domain.Singletons
             {
                 if (_instance == null)
                 {
-                    _instance = new ClientSingleton();
+                    _instance = new ClientSingleton(); // exactly once
                 }
 
                 return _instance;
@@ -43,9 +43,7 @@ namespace PizzaWorld.Domain.Singletons
 
         public void MakeAStore()
         {
-            var s = new Store();
-
-            Stores.Add(s);
+            Stores.Add(new Store());
             Save();
         }
 
