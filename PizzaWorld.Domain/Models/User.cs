@@ -1,10 +1,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using PizzaWorld.Domain.Abstracts;
 
 namespace PizzaWorld.Domain.Models // the point is to be specific as to where the code is
 {
-    public class User
+    public class User : AEntity
     {
         public List<Order> Orders { get; set; }
 

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Collections.Generic;
 using System.Xml.Serialization;
 using PizzaWorld.Domain.Models;
+using PizzaWorld.Domain.Abstracts;
 
 namespace PizzaWorld.Domain.Singletons
 {
@@ -29,6 +30,8 @@ namespace PizzaWorld.Domain.Singletons
         }
 
         public List<Store> Stores { get; set; }
+
+        public List<APizzaModel> Pizzas { get; set; }
 
         private ClientSingleton() // private becauase we don't want anyone other than ClientSingleton to create it
         {
@@ -61,14 +64,35 @@ namespace PizzaWorld.Domain.Singletons
 
         private void Save()
         {
+            /*
             var file = new StreamWriter(_path);
             var xml = new XmlSerializer(typeof(List<Store>)); // serializer wants the data type's definition
 
             xml.Serialize(file, Stores);
+            */
+
+            using (var file = new StreamWriter(_path))
+            {
+                var xml = new XmlSerializer(typeof(List<Store>));
+
+                xml.Serialize(file, Stores);
+            }
         }
 
         private void Read()
         {
+            if (!File.Exists(_path))
+            {
+                Stores = new List<Store>();
+                return;
+            }
+
+            var file = new StreamReader(_path);
+            var xml = new XmlSerializer(typeof(List<Store>));
+
+            Stores = xml.Deserialize(file) as List<Store>;
+
+            /*
             if (File.Exists(_path))
             {
                 var file = new StreamReader(_path);
@@ -80,6 +104,7 @@ namespace PizzaWorld.Domain.Singletons
             {
                 Stores = new List<Store>(); // don't want Read to create stores
             }
+            */
         }
     }
 }
