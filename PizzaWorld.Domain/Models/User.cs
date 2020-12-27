@@ -26,7 +26,7 @@ namespace PizzaWorld.Domain.Models // the point is to be specific as to where th
             }
 
             // $ means you can take any properties of fields of that object and get the string value of them
-            return $"you have have selected this store: {SelectedStore} and ordered these pizzas: { sb.ToString() }"; // called string interpolation
+            return $"you have selected this store: {SelectedStore} and ordered these pizzas: { sb.ToString() }"; // called string interpolation
             //return $"I have selected this store: {SelectedStore}"; // called string concatenation
         }
     }

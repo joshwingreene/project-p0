@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using PizzaWorld.Domain.Models;
@@ -11,15 +12,27 @@ namespace PizzaWorld.Client
 
         public SqlClient()
         {
+            /*
             if (ReadStores().Count() == 0)
             {
                 CreateStore();
             }
+            */
+        }
+
+        public IEnumerable<Order> ReadOrders(Store store)
+        {
+            return ReadOne(store.Name).Orders;
         }
 
         public IEnumerable<Store> ReadStores()
         {
             return _db.Stores;
+        }
+
+        public Store ReadOne(string name)
+        {
+            return _db.Stores.FirstOrDefault<Store>(store => store.Name == name);
         }
 
         public void Save(Store store)
@@ -31,6 +44,17 @@ namespace PizzaWorld.Client
         public void CreateStore()
         {
             Save(new Store());
+        }
+
+        public Store SelectStore()
+        {
+            string input = Console.ReadLine();
+            return ReadOne(input);
+        }
+
+        public void Update(Store store)
+        {
+            _db.SaveChanges();
         }
     }
 }

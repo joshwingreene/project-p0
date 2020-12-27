@@ -8,12 +8,19 @@ namespace PizzaWorld.Domain.Models // the point is to be specific as to where th
     {
         public List<Order> Orders { get; set; }
 
+        public String Name { get; set; }
+
         /* crud methods
         - create
         - read
         - update
         - delete
         */
+
+        public Store()
+        {
+            Orders = new List<Order>();
+        }
 
         public void CreateOrder()
         {
@@ -36,6 +43,11 @@ namespace PizzaWorld.Domain.Models // the point is to be specific as to where th
             {
                 GC.Collect(); // tells GC that whatever is here is ready to be cleaned out (level 1 or its critical that we need more memory)
             }
+        }
+
+        public override string ToString()
+        {
+            return Name;
         }
     }
 }

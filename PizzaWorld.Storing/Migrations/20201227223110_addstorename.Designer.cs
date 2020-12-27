@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PizzaWorld.Storing;
 
 namespace PizzaWorld.Storing.Migrations
 {
     [DbContext(typeof(PizzaWorldContext))]
-    partial class PizzaWorldContextModelSnapshot : ModelSnapshot
+    [Migration("20201227223110_addstorename")]
+    partial class addstorename
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -77,18 +79,6 @@ namespace PizzaWorld.Storing.Migrations
                     b.HasKey("EntityId");
 
                     b.ToTable("Stores");
-
-                    b.HasData(
-                        new
-                        {
-                            EntityId = 1L,
-                            Name = "First Store"
-                        },
-                        new
-                        {
-                            EntityId = 2L,
-                            Name = "Second Store"
-                        });
                 });
 
             modelBuilder.Entity("PizzaWorld.Domain.Models.User", b =>

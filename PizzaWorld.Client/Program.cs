@@ -68,12 +68,13 @@ namespace PizzaWorld.Client
             //PrintAllStores();
             PrintAllStoresWithEF();
             
-            user.SelectedStore = _client.SelectStore();
+            user.SelectedStore = _sql.SelectStore();
             user.SelectedStore.CreateOrder();
             user.Orders.Add(user.SelectedStore.Orders.Last()); // last because the above line just created a new order
             // while loop (user user.SelectPizza() until the user says no more pizza)
             user.Orders.Last().MakeMeatPizza();
             user.Orders.Last().MakeMeatPizza();
+            _sql.Update(user.SelectedStore);
 
             System.Console.WriteLine(user);
         }

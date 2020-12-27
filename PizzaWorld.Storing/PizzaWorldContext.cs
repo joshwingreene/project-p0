@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using PizzaWorld.Domain.Models; // you also need to add a reference to the domain to the storing project since we need access to the model definitions here
 using PizzaWorld.Domain.Abstracts;
+using System.Collections.Generic;
 
 namespace PizzaWorld.Storing /* DON'T FORGET TO REMOVE the PW BEFORE COMMITTING and PUSHING (commit the second line and save the first line somewhere on my computer) */
 {
@@ -27,6 +28,18 @@ namespace PizzaWorld.Storing /* DON'T FORGET TO REMOVE the PW BEFORE COMMITTING 
             builder.Entity<User>().HasKey(u => u.EntityId);
             builder.Entity<Order>().HasKey(o => o.EntityId);
             builder.Entity<APizzaModel>().HasKey(p => p.EntityId);
+
+            SeedData(builder);
+        }
+
+        private void SeedData(ModelBuilder builder)
+        {
+            builder.Entity<Store>().HasData(new List<Store>()
+                {
+                    new Store { EntityId = 1, Name = "First Store"},
+                    new Store { EntityId = 2, Name = "Second Store"}
+                }
+            );
         }
     }
 }
