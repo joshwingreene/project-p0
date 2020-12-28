@@ -65,6 +65,8 @@ namespace PizzaWorld.Client
         {
             var user = new User();
 
+            _sql.SaveUser(user);
+
             //PrintAllStores();
             PrintAllStoresWithEF();
             

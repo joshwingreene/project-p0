@@ -20,10 +20,15 @@ namespace PizzaWorld.Client
             */
         }
 
+        // Orders
+
         public IEnumerable<Order> ReadOrders(Store store)
         {
             return ReadOne(store.Name).Orders;
         }
+
+
+        // Stores
 
         public IEnumerable<Store> ReadStores()
         {
@@ -54,6 +59,14 @@ namespace PizzaWorld.Client
 
         public void Update(Store store)
         {
+            _db.SaveChanges();
+        }
+
+        // Users
+
+        public void SaveUser(User user)
+        {
+            _db.Add(user);
             _db.SaveChanges();
         }
     }
