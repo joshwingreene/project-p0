@@ -1,12 +1,13 @@
-//using System.Collections.Generic;
+using System.Collections.Generic;
+using PizzaWorld.Domain.Models;
 
 namespace PizzaWorld.Domain.Abstracts
 {
     public class APizzaModel : AEntity // no longr abstract bc creating a new migration expects concrete classes
     {
-        public string Crust { get; set; }
-        public string Size { get; set; }
-        //public List<string> Toppings { get; set; }
+        public Crust Crust { get; set; }
+        public Size Size { get; set; }
+        public List<Topping> Toppings { get; set; }
 
         protected APizzaModel()
         {
