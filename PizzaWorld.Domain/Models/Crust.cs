@@ -6,10 +6,13 @@ namespace PizzaWorld.Domain.Models
     {
         public string Name { get; set; }
 
+        public decimal Price { get; set; }
+
         public Crust() {}
 
-        public Crust(string name) {
+        public Crust(string name, decimal price) {
             Name = name;
+            Price = price;
         }
     }
 }

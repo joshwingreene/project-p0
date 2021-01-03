@@ -88,27 +88,35 @@ namespace PizzaWorld.Client
             user.SelectedStore.CreateOrder();
             user.Orders.Add(user.SelectedStore.Orders.Last()); // last because the above line just created a new order
             
-            string input = "";
+            string submitInput = "";
 
-            while (input != "submit")
+            while (submitInput != "submit")
             {
                 PrintAvailablePizzaTypes();
-                System.Console.WriteLine("Enter a type of pizza to add to your order. Or Enter \"submit\" to submit your order");
-                input = Console.ReadLine();
-                switch (input)
+                System.Console.WriteLine("Enter a type of pizza to add to your order.");
+                string typeInput = Console.ReadLine();
+                System.Console.WriteLine("Enter the size for your pizza");
+                string sizeInput = Console.ReadLine();
+                switch (typeInput)
                 {
                     case "Meat":
                         user.Orders.Last().MakeMeatPizza();
+                        user.Orders.Last().ChangeLastPizzaSize(sizeInput);
+                        user.Orders.Last().PrintPriceOfLastPizza();
                         break;
                     case "Pineapple":
                         user.Orders.Last().MakePineapplePizza();
+                        user.Orders.Last().ChangeLastPizzaSize(sizeInput);
+                        user.Orders.Last().PrintPriceOfLastPizza();
                         break;
-                    case "submit":
-                        _sql.Update(user.SelectedStore);
-                        System.Console.WriteLine(user);
+                    default:
                         break;
                 }
+                System.Console.WriteLine("Would you like to add another pizza to your order or checkout? Enter \"submit\" to submit your order");
+                submitInput = Console.ReadLine();
             }
+            _sql.Update(user.SelectedStore);
+            System.Console.WriteLine(user);
         }
     }
 }

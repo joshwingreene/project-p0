@@ -7,12 +7,12 @@ namespace PizzaWorld.Domain.Models
     {
         protected override void AddCrust()
         {
-            Crust = new Crust("Regular");
+            Crust = new Crust("Regular", 1.99m);
         }
 
         protected override void AddSize()
         {
-            Size = new Size("Medium", 12);
+            Size = new Size("Medium", 12, 2.99m);
         }
 
         protected override void AddToppings()
@@ -23,6 +23,11 @@ namespace PizzaWorld.Domain.Models
                 new PizzaTopping(this, new Topping { Name = "Pepperoni" }),
                 new PizzaTopping(this, new Topping { Name = "Pineapple" })
             };
+        }
+
+        protected override void AddTypePrice()
+        {
+            TypePrice = 5.99m;
         }
     }
 }

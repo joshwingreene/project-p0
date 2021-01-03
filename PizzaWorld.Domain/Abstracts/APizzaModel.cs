@@ -9,15 +9,24 @@ namespace PizzaWorld.Domain.Abstracts
         public Size Size { get; set; }
         public List<PizzaTopping> PizzaToppings { get; set; }
 
+        public decimal TypePrice { get; set; }
+
         protected APizzaModel()
         {
             AddCrust();
             AddSize();
             AddToppings();
+            AddTypePrice();
+        }
+
+        public decimal GetTotalPrice() 
+        {
+            return Crust.Price + Size.Price + TypePrice;
         }
 
         protected virtual void AddCrust() {}
         protected virtual void AddSize() {}
         protected virtual void AddToppings() {}
+        protected virtual void AddTypePrice() {}
     }
 }

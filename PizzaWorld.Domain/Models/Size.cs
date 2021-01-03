@@ -8,12 +8,15 @@ namespace PizzaWorld.Domain.Models
 
         public int Inches { get; set; }
 
+        public decimal Price { get; set; }
+
         public Size() {}
 
-        public Size(string name, int inches)
+        public Size(string name, int inches, decimal price)
         {
             Name = name;
             Inches = inches;
+            Price = price;
         }
     }
 }
