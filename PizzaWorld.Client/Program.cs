@@ -61,6 +61,20 @@ namespace PizzaWorld.Client
             }
         }
 
+        static void PrintAvailablePizzaTypes()
+        {
+            List<string> availablePizzaTypes = new List<string>
+            {
+                "Meat",
+                "Pineapple"
+            };
+
+            foreach (var pizzaType in availablePizzaTypes)
+            {
+                System.Console.WriteLine(pizzaType);
+            }
+        }
+
         static void UserView()
         {
             var user = new User();
@@ -73,12 +87,28 @@ namespace PizzaWorld.Client
             user.SelectedStore = _sql.SelectStore();
             user.SelectedStore.CreateOrder();
             user.Orders.Add(user.SelectedStore.Orders.Last()); // last because the above line just created a new order
-            // while loop (user user.SelectPizza() until the user says no more pizza)
-            user.Orders.Last().MakeMeatPizza();
-            user.Orders.Last().MakeMeatPizza();
-            _sql.Update(user.SelectedStore);
+            
+            string input = "";
 
-            System.Console.WriteLine(user);
+            while (input != "submit")
+            {
+                PrintAvailablePizzaTypes();
+                System.Console.WriteLine("Enter a type of pizza to add to your order. Or Enter \"submit\" to submit your order");
+                input = Console.ReadLine();
+                switch (input)
+                {
+                    case "Meat":
+                        user.Orders.Last().MakeMeatPizza();
+                        break;
+                    case "Pineapple":
+                        user.Orders.Last().MakePineapplePizza();
+                        break;
+                    case "submit":
+                        _sql.Update(user.SelectedStore);
+                        System.Console.WriteLine(user);
+                        break;
+                }
+            }
         }
     }
 }

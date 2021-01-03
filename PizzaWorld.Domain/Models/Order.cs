@@ -19,5 +19,10 @@ namespace PizzaWorld.Domain.Models // the point is to be specific as to where th
         {
             Pizzas.Add(_pizzaFactory.Make<MeatPizza>());
         }
+
+        public void MakePineapplePizza()
+        {
+            Pizzas.Add(_pizzaFactory.Make<PineapplePizza>());
+        }
     }
 }
