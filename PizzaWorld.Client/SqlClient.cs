@@ -69,5 +69,13 @@ namespace PizzaWorld.Client
             _db.Add(user);
             _db.SaveChanges();
         }
+
+        // Toppings
+        /*
+        public IEnumerable<Topping> GetToppings()
+        {
+            return _db.Toppings;
+        }
+        */
     }
 }

@@ -15,6 +15,7 @@ namespace PizzaWorld.Storing /* DON'T FORGET TO REMOVE the PW BEFORE COMMITTING 
         public DbSet<Crust> Crusts { get; set; }
         public DbSet<Size> Sizes { get; set; }
         public DbSet<Topping> Toppings { get; set; }
+        public DbSet<PizzaTopping> PizzaToppings { get; set; }
 
 
         // now we need to let the ORM know where to the save the data type from the C# objects
@@ -34,6 +35,7 @@ namespace PizzaWorld.Storing /* DON'T FORGET TO REMOVE the PW BEFORE COMMITTING 
             builder.Entity<APizzaModel>().HasKey(p => p.EntityId);
             builder.Entity<Crust>().HasKey(c => c.EntityId);
             builder.Entity<Size>().HasKey(sz => sz.EntityId);
+            builder.Entity<PizzaTopping>().HasKey(pt => pt.EntityId);
             builder.Entity<Topping>().HasKey(t => t.EntityId);
 
             SeedData(builder);
@@ -47,6 +49,15 @@ namespace PizzaWorld.Storing /* DON'T FORGET TO REMOVE the PW BEFORE COMMITTING 
                     new Store { EntityId = 2, Name = "Second Store"}
                 }
             );
+            /*
+            builder.Entity<Topping>().HasData(new List<Topping>()
+                {
+                    new Topping { EntityId = 1, Name = "Cheese"},
+                    new Topping { EntityId = 2, Name = "Pepperoni"},
+                    new Topping { EntityId = 3, Name = "Sausage"}
+                }
+            );
+            */
         }
     }
 }
