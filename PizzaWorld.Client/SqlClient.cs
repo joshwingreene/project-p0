@@ -71,11 +71,9 @@ namespace PizzaWorld.Client
         }
 
         // Toppings
-        /*
         public IEnumerable<Topping> GetToppings()
         {
             return _db.Toppings;
         }
-        */
     }
 }

@@ -15,16 +15,16 @@ namespace PizzaWorld.Domain.Models
             Size = new Size("Medium", 12, 2.99m);
         }
 
-        protected override void AddToppings()
-        {
+        public override void AddToppings(List<Topping> availableToppings)
+        {   
             PizzaToppings = new List<PizzaTopping>
             {
-                new PizzaTopping(this, new Topping { Name = "Cheese" }),
-                new PizzaTopping(this, new Topping { Name = "Pepperoni" }),
-                new PizzaTopping(this, new Topping { Name = "Sausage" })
+                new PizzaTopping(this, availableToppings.Find(t => t.Name == "Cheese")),
+                new PizzaTopping(this, availableToppings.Find(t => t.Name == "Pepperoni")),
+                new PizzaTopping(this, availableToppings.Find(t => t.Name == "Sausage"))
             };
         }
-        
+
         protected override void AddTypePrice()
         {
             TypePrice = 5.99m;

@@ -38,14 +38,16 @@ namespace PizzaWorld.Domain.Models // the point is to be specific as to where th
             }
         }
 
-        public void MakeMeatPizza()
+        public void MakeMeatPizza(List<Topping> availableToppings)
         {
             Pizzas.Add(_pizzaFactory.Make<MeatPizza>());
+            Pizzas.Last().AddToppings(availableToppings);
         }
 
-        public void MakePineapplePizza()
+        public void MakePineapplePizza(List<Topping> availableToppings)
         {
             Pizzas.Add(_pizzaFactory.Make<PineapplePizza>());
+            Pizzas.Last().AddToppings(availableToppings);
         }
     }
 }

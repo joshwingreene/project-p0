@@ -88,6 +88,8 @@ namespace PizzaWorld.Client
             user.SelectedStore.CreateOrder();
             user.Orders.Add(user.SelectedStore.Orders.Last()); // last because the above line just created a new order
             
+            List<Topping> availableToppings = _sql.GetToppings().ToList();
+
             string submitInput = "";
 
             while (submitInput != "submit")
@@ -97,21 +99,21 @@ namespace PizzaWorld.Client
                 string typeInput = Console.ReadLine();
                 System.Console.WriteLine("Enter the size for your pizza");
                 string sizeInput = Console.ReadLine();
+                Order currentOrder = user.Orders.Last();
                 switch (typeInput)
                 {
                     case "Meat":
-                        user.Orders.Last().MakeMeatPizza();
-                        user.Orders.Last().ChangeLastPizzaSize(sizeInput);
-                        user.Orders.Last().PrintPriceOfLastPizza();
+                        currentOrder.MakeMeatPizza(availableToppings);
                         break;
                     case "Pineapple":
-                        user.Orders.Last().MakePineapplePizza();
-                        user.Orders.Last().ChangeLastPizzaSize(sizeInput);
-                        user.Orders.Last().PrintPriceOfLastPizza();
+                        currentOrder.MakePineapplePizza(availableToppings);
                         break;
                     default:
                         break;
                 }
+                currentOrder.ChangeLastPizzaSize(sizeInput);
+                currentOrder.PrintPriceOfLastPizza();
+
                 System.Console.WriteLine("Would you like to add another pizza to your order or checkout? Enter \"submit\" to submit your order");
                 submitInput = Console.ReadLine();
             }

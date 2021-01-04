@@ -15,7 +15,6 @@ namespace PizzaWorld.Domain.Abstracts
         {
             AddCrust();
             AddSize();
-            AddToppings();
             AddTypePrice();
         }
 
@@ -26,7 +25,7 @@ namespace PizzaWorld.Domain.Abstracts
 
         protected virtual void AddCrust() {}
         protected virtual void AddSize() {}
-        protected virtual void AddToppings() {}
         protected virtual void AddTypePrice() {}
+        public virtual void AddToppings(List<Topping> availableToppings) {}
     }
 }

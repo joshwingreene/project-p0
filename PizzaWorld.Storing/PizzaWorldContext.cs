@@ -49,15 +49,14 @@ namespace PizzaWorld.Storing /* DON'T FORGET TO REMOVE the PW BEFORE COMMITTING 
                     new Store { EntityId = 2, Name = "Second Store"}
                 }
             );
-            /*
             builder.Entity<Topping>().HasData(new List<Topping>()
                 {
                     new Topping { EntityId = 1, Name = "Cheese"},
                     new Topping { EntityId = 2, Name = "Pepperoni"},
-                    new Topping { EntityId = 3, Name = "Sausage"}
+                    new Topping { EntityId = 3, Name = "Sausage"},
+                    new Topping { EntityId = 4, Name = "Pineapple"}
                 }
             );
-            */
         }
     }
 }
