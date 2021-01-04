@@ -115,6 +115,7 @@ namespace PizzaWorld.Client
                 }
                 currentOrder.ChangeLastPizzaSize(sizeInput);
                 currentOrder.PrintPriceOfLastPizza();
+                currentOrder.PrintCurrentTally();
 
                 System.Console.WriteLine("Would you like to add another pizza to your order or checkout? Enter \"submit\" to submit your order");
                 submitInput = Console.ReadLine();

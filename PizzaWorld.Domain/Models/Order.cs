@@ -22,6 +22,18 @@ namespace PizzaWorld.Domain.Models // the point is to be specific as to where th
             Console.WriteLine(Pizzas.Last().GetTotalPrice());
         }
 
+        public void PrintCurrentTally()
+        {
+            decimal total = 0.0m;
+
+            foreach (var pizza in Pizzas)
+            {
+                total += pizza.GetTotalPrice();
+            }
+
+            Console.WriteLine("Order Total: " + total);
+        }
+
         public void ChangeLastPizzaSize(string sizeName)
         {
             switch (sizeName)

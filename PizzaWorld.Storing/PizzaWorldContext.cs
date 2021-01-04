@@ -23,7 +23,7 @@ namespace PizzaWorld.Storing /* DON'T FORGET TO REMOVE the PW BEFORE COMMITTING 
         protected override void OnConfiguring(DbContextOptionsBuilder builder)
         {
             // REMINDER - Always add the right values when in use
-            builder.UseSqlServer("Server=tcp:joshwinpizzaworld.database.windows.net,1433;Initial Catalog=PizzaWorldDB;User ID=sqladmin;Password=Password12345;");
+            builder.UseSqlServer("Server=;Initial Catalog=;User ID=;Password=;");
         }
 
         // Define how records should be created
