@@ -5,16 +5,15 @@ namespace PizzaWorld.Domain.Abstracts
 {
     public class APizzaModel : AEntity // no longr abstract bc creating a new migration expects concrete classes
     {
+        public string Name { get; set; }
+        public decimal TypePrice { get; set; }
         public Crust Crust { get; set; }
         public Size Size { get; set; }
         public List<PizzaTopping> PizzaToppings { get; set; }
 
-        public decimal TypePrice { get; set; }
-
         protected APizzaModel()
         {
-            AddCrust();
-            AddSize();
+            AddName();
             AddTypePrice();
         }
 
@@ -23,8 +22,22 @@ namespace PizzaWorld.Domain.Abstracts
             return Crust.Price + Size.Price + TypePrice;
         }
 
-        protected virtual void AddCrust() {}
-        protected virtual void AddSize() {}
+        public void AddCrust(List<Crust> availCrusts)
+        {
+            Crust = availCrusts.Find(c => c.Name == "Regular");
+        }
+
+        public void AddSize(List<Size> availSizes)
+        {
+            Size = availSizes.Find(s => s.Name == "Medium");
+        }
+
+        public override string ToString()
+        {
+            return Name;
+        }
+
+        protected virtual void AddName() {}
         protected virtual void AddTypePrice() {}
         public virtual void AddToppings(List<Topping> availableToppings) {}
     }

@@ -88,6 +88,8 @@ namespace PizzaWorld.Client
             user.SelectedStore.CreateOrder();
             user.Orders.Add(user.SelectedStore.Orders.Last()); // last because the above line just created a new order
             
+            List<Crust> availableCrusts = _sql.GetCrusts().ToList();
+            List<Size> availableSizes = _sql.GetSizes().ToList();
             List<Topping> availableToppings = _sql.GetToppings().ToList();
 
             string submitInput = "";
@@ -103,10 +105,10 @@ namespace PizzaWorld.Client
                 switch (typeInput)
                 {
                     case "Meat":
-                        currentOrder.MakeMeatPizza(availableToppings);
+                        currentOrder.MakeMeatPizza(availableCrusts, availableSizes, availableToppings);
                         break;
                     case "Pineapple":
-                        currentOrder.MakePineapplePizza(availableToppings);
+                        currentOrder.MakePineapplePizza(availableCrusts, availableSizes, availableToppings);
                         break;
                     default:
                         break;

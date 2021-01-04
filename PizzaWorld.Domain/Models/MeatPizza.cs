@@ -5,14 +5,13 @@ namespace PizzaWorld.Domain.Models
 {
     public class MeatPizza : APizzaModel
     {
-        protected override void AddCrust()
+        protected override void AddName()
         {
-            Crust = new Crust("Regular", 1.99m);
+            Name = "Meat Pizza";
         }
-
-        protected override void AddSize()
+        protected override void AddTypePrice()
         {
-            Size = new Size("Medium", 12, 2.99m);
+            TypePrice = 5.99m;
         }
 
         public override void AddToppings(List<Topping> availableToppings)
@@ -23,11 +22,6 @@ namespace PizzaWorld.Domain.Models
                 new PizzaTopping(this, availableToppings.Find(t => t.Name == "Pepperoni")),
                 new PizzaTopping(this, availableToppings.Find(t => t.Name == "Sausage"))
             };
-        }
-
-        protected override void AddTypePrice()
-        {
-            TypePrice = 5.99m;
         }
     }
 }

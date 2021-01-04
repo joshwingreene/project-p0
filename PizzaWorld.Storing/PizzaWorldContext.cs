@@ -23,7 +23,7 @@ namespace PizzaWorld.Storing /* DON'T FORGET TO REMOVE the PW BEFORE COMMITTING 
         protected override void OnConfiguring(DbContextOptionsBuilder builder)
         {
             // REMINDER - Always add the right values when in use
-            builder.UseSqlServer("Server=;Initial Catalog=;User ID=;Password=;");
+            builder.UseSqlServer("Server=tcp:joshwinpizzaworld.database.windows.net,1433;Initial Catalog=PizzaWorldDB;User ID=sqladmin;Password=Password12345;");
         }
 
         // Define how records should be created
@@ -47,6 +47,20 @@ namespace PizzaWorld.Storing /* DON'T FORGET TO REMOVE the PW BEFORE COMMITTING 
                 {
                     new Store { EntityId = 1, Name = "First Store"},
                     new Store { EntityId = 2, Name = "Second Store"}
+                }
+            );
+            builder.Entity<Crust>().HasData(new List<Crust>()
+                {
+                    new Crust { EntityId = 1, Name = "Thin", Price = .99m },
+                    new Crust { EntityId = 2, Name = "Regular", Price = 1.99m },
+                    new Crust { EntityId = 3, Name = "Large", Price = 2.99m }
+                }
+            );
+            builder.Entity<Size>().HasData(new List<Size>()
+                {
+                    new Size { EntityId = 1, Name = "Small", Inches = 10, Price = .99m },
+                    new Size { EntityId = 2, Name = "Medium", Inches = 12, Price = 2.99m },
+                    new Size { EntityId = 3, Name = "Large", Inches = 12, Price = 4.99m }
                 }
             );
             builder.Entity<Topping>().HasData(new List<Topping>()

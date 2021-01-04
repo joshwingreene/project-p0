@@ -75,5 +75,17 @@ namespace PizzaWorld.Client
         {
             return _db.Toppings;
         }
+
+        // Crusts
+        public IEnumerable<Crust> GetCrusts()
+        {
+            return _db.Crusts;
+        }
+
+        // Sizes
+        public IEnumerable<Size> GetSizes()
+        {
+            return _db.Sizes;
+        }
     }
 }

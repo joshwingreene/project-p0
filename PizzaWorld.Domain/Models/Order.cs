@@ -38,16 +38,23 @@ namespace PizzaWorld.Domain.Models // the point is to be specific as to where th
             }
         }
 
-        public void MakeMeatPizza(List<Topping> availableToppings)
+        private void AddMajorPizzaParts(APizzaModel currentPizza, List<Crust> availCrusts, List<Size> availSizes, List<Topping> availToppings)
         {
-            Pizzas.Add(_pizzaFactory.Make<MeatPizza>());
-            Pizzas.Last().AddToppings(availableToppings);
+            currentPizza.AddCrust(availCrusts);
+            currentPizza.AddSize(availSizes);
+            currentPizza.AddToppings(availToppings);
         }
 
-        public void MakePineapplePizza(List<Topping> availableToppings)
+        public void MakeMeatPizza(List<Crust> availCrusts, List<Size> availSizes, List<Topping> availToppings)
+        {
+            Pizzas.Add(_pizzaFactory.Make<MeatPizza>());
+            AddMajorPizzaParts(Pizzas.Last(), availCrusts, availSizes, availToppings);
+        }
+
+        public void MakePineapplePizza(List<Crust> availCrusts, List<Size> availSizes, List<Topping> availToppings)
         {
             Pizzas.Add(_pizzaFactory.Make<PineapplePizza>());
-            Pizzas.Last().AddToppings(availableToppings);
+            AddMajorPizzaParts(Pizzas.Last(), availCrusts, availSizes, availToppings);
         }
     }
 }
