@@ -70,6 +70,32 @@ namespace PizzaWorld.Client
             _db.SaveChanges();
         }
 
+        public bool CheckIfUsernameExists(string username)
+        {
+            return null != _db.Users.FirstOrDefault<User>(user => user.Username == username);
+        }
+
+        public User GetUserIfCredentialsAreValid(string username, string password)
+        {
+            var user = _db.Users.FirstOrDefault<User>(user => user.Username == username);
+
+            if (user != null)
+            {
+                if (user.Password == password)
+                {
+                    return user;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            else
+            {
+                return null;
+            }
+        }
+
         // Toppings
         public IEnumerable<Topping> GetToppings()
         {

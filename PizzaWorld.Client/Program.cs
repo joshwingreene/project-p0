@@ -221,16 +221,67 @@ namespace PizzaWorld.Client
 
         static void UserView()
         {
-            var user = new User();
+            Console.WriteLine("Welcome to PizzaWorld!");
+            Console.WriteLine("a) Sign In");
+            Console.WriteLine("b) Create Account");
+            string accountInput = Console.ReadLine();
 
-            _sql.SaveUser(user);
+            User user = null;
+            string usernameInput = "";
+            string passwordInput = "";
+
+            if (accountInput == "a")
+            {
+                do
+                {
+                    Console.WriteLine("Enter Username");
+                    usernameInput = Console.ReadLine();
+
+                    Console.WriteLine("Enter Password");
+                    passwordInput = Console.ReadLine();
+
+                    user = _sql.GetUserIfCredentialsAreValid(usernameInput, passwordInput);
+
+                    if (user == null) {
+                        Console.WriteLine("Your credentials were incorrect. Please try again");
+                    }
+                    
+                } while (user == null);
+            }
+            else if (accountInput == "b")
+            {
+                bool AlreadyExists = false;
+                do
+                {
+                    Console.WriteLine("Select Username");
+                    usernameInput = Console.ReadLine();
+
+                    AlreadyExists = _sql.CheckIfUsernameExists(usernameInput);
+
+                    if (AlreadyExists)
+                    {
+                        Console.WriteLine("Your chosen username has been taken. Please try another one");
+                    }
+
+                } while (AlreadyExists);
+
+                Console.WriteLine("Select Password");
+                passwordInput = Console.ReadLine();
+
+                user = new User(usernameInput, passwordInput);
+                _sql.SaveUser(user);
+            }
+
+            //var user = new User();
+
+            //_sql.SaveUser(user);
 
             //PrintAllStores();
             PrintAllStoresWithEF();
             
             user.SelectedStore = _sql.SelectStore();
 
-            _sql.Update(user.SelectedStore);
+            _sql.Update(user.SelectedStore); // this line is just in case the user cancels their order
 
             CreateAndProcessOrder(user);
 

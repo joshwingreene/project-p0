@@ -7,6 +7,10 @@ namespace PizzaWorld.Domain.Models // the point is to be specific as to where th
 {
     public class User : AEntity
     {
+        public string Username { get; set; }
+
+        public string Password { get; set; }
+
         public List<Order> Orders { get; set; }
 
         public Store SelectedStore { get; set; }
@@ -14,6 +18,13 @@ namespace PizzaWorld.Domain.Models // the point is to be specific as to where th
         public User()
         {
             Orders = new List<Order>();
+        }
+
+        public User(string username, string password)
+        {
+            Orders = new List<Order>();
+            Username = username;
+            Password = password;
         }
 
         public override string ToString()
