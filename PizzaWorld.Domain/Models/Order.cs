@@ -22,7 +22,7 @@ namespace PizzaWorld.Domain.Models // the point is to be specific as to where th
             Console.WriteLine(Pizzas.Last().GetTotalPrice());
         }
 
-        public void PrintCurrentTally()
+        public decimal GetCurrentTally()
         {
             decimal total = 0.0m;
 
@@ -31,21 +31,21 @@ namespace PizzaWorld.Domain.Models // the point is to be specific as to where th
                 total += pizza.GetTotalPrice();
             }
 
-            Console.WriteLine("Order Total: " + total);
+            return total;
         }
 
-        public void ChangeLastPizzaSize(string sizeName)
+        public void ChangeLastPizzaSize(string sizeName, List<Size> availSizes)
         {
             switch (sizeName)
             {
                 case "Small":
-                    Pizzas.Last().Size = new Size("Small", 12, .99m);
+                    Pizzas.Last().Size = availSizes.Find(s => s.Name == "Small");
                     break;
                 case "Medium":
-                    Pizzas.Last().Size = new Size("Medium", 12, 2.99m);
+                    Pizzas.Last().Size = availSizes.Find(s => s.Name == "Medium");
                     break;
                 case "Large":
-                    Pizzas.Last().Size = new Size("Large", 12, 4.99m);
+                    Pizzas.Last().Size = availSizes.Find(s => s.Name == "Large");
                     break;
             }
         }
