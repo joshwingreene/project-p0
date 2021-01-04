@@ -14,5 +14,10 @@ namespace PizzaWorld.Domain.Models
             Name = name;
             Price = price;
         }
+
+        public override string ToString()
+        {
+            return Name;
+        }
     }
 }

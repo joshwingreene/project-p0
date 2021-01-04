@@ -89,6 +89,7 @@ namespace PizzaWorld.Client
 
             do
             {
+                System.Console.WriteLine("Available Pizzas:");
                 PrintAvailablePizzaTypes();
                 System.Console.WriteLine("Enter a type of pizza to add to your order.");
                 string typeInput = Console.ReadLine();
@@ -110,14 +111,65 @@ namespace PizzaWorld.Client
                 currentOrder.PrintPriceOfLastPizza();
                 System.Console.WriteLine("Current Order Total: " + currentOrder.GetCurrentTally());
 
-                System.Console.WriteLine("What would you like to do?");
-                System.Console.WriteLine("a) Add another pizza to your order");
-                System.Console.WriteLine("b) Edit the pizzas in your order");
-                System.Console.WriteLine("c) Checkout");
-                //System.Console.WriteLine("Would you like to add another pizza to your order or checkout? Enter \"submit\" to submit your order");
-                submitInput = Console.ReadLine();
+                do
+                {
+                    System.Console.WriteLine("What would you like to do?");
+                    System.Console.WriteLine("a) Add another pizza to your order");
+                    System.Console.WriteLine("b) Edit the pizzas in your order");
+                    System.Console.WriteLine("c) Checkout");
+                    //System.Console.WriteLine("Would you like to add another pizza to your order or checkout? Enter \"submit\" to submit your order");
+                    submitInput = Console.ReadLine();
 
-                //TODO - Thinking about putting the edit code here
+                    // Edit Pizza Area
+                    if (submitInput == "b")
+                    {
+                        currentOrder.PrintPizzas();
+                        System.Console.WriteLine("Which pizza would you like to edit? (use numbers, starting from 0)");
+                        int.TryParse(Console.ReadLine(), out int pizzaNumInput);
+
+                        var selectedPizza = currentOrder.Pizzas.ElementAtOrDefault(pizzaNumInput);
+
+                        System.Console.WriteLine("What do you want to do with this pizza?");
+                        System.Console.WriteLine("a) Change the type of Crust");
+                        System.Console.WriteLine("b) Change the size");
+                        System.Console.WriteLine("c) Remove it");
+                        string editOptionInput = Console.ReadLine();
+
+                        switch (editOptionInput)
+                        {
+                            case "a": // TODO: Use one common method for this two cases
+                                System.Console.WriteLine(selectedPizza.ToString() + "'s Currrent Crust: " + selectedPizza.Crust.ToString());
+                                System.Console.WriteLine("What do you want to change the Crust to");
+                                foreach (var c in availableCrusts)
+                                {
+                                    System.Console.WriteLine(c);
+                                }
+                                string crustChoiceInput = Console.ReadLine();
+                                currentOrder.ChangePizzaCrust(pizzaNumInput, crustChoiceInput, availableCrusts);
+                                System.Console.WriteLine("Updated Order Tally: " + currentOrder.GetCurrentTally());
+                                break;
+                            case "b":
+                                System.Console.WriteLine(selectedPizza.ToString() + "'s Currrent Size: " + selectedPizza.Size.ToString());
+                                System.Console.WriteLine("What do you want to change the Size to");
+                                foreach (var c in availableSizes)
+                                {
+                                    System.Console.WriteLine(c);
+                                }
+                                string sizeChoiceInput = Console.ReadLine();
+                                currentOrder.ChangePizzaSize(pizzaNumInput, sizeChoiceInput, availableSizes);
+                                System.Console.WriteLine("Updated Order Tally: " + currentOrder.GetCurrentTally());
+                                break;
+                            case "c":
+                                currentOrder.RemovePizza(pizzaNumInput);
+                                System.Console.WriteLine("Updated Order Tally: " + currentOrder.GetCurrentTally());
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+
+                }   while (submitInput == "b");
+                
             } while (submitInput == "a");
 
             if (submitInput == "c")

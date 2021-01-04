@@ -18,5 +18,10 @@ namespace PizzaWorld.Domain.Models
             Inches = inches;
             Price = price;
         }
+
+        public override string ToString()
+        {
+            return Name;
+        }
     }
 }
