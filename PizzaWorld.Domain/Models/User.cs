@@ -15,16 +15,21 @@ namespace PizzaWorld.Domain.Models // the point is to be specific as to where th
 
         public Store SelectedStore { get; set; }
 
-        public User()
-        {
-            Orders = new List<Order>();
-        }
-
         public User(string username, string password)
         {
             Orders = new List<Order>();
             Username = username;
             Password = password;
+        }
+
+        public void DisplayNumberOfPastOrders()
+        {
+            System.Console.WriteLine(Orders.Count);
+        }
+
+        public void DisplaySelectedStore()
+        {
+            System.Console.WriteLine(SelectedStore.ToString());
         }
 
         public override string ToString()

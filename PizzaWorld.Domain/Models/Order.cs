@@ -7,7 +7,7 @@ using System.Text;
 
 namespace PizzaWorld.Domain.Models // the point is to be specific as to where the code is
 {
-    public class Order : AEntity // changed to public in order for the test to get access to it
+    public class Order : AEntity, IComparable<Order> // changed to public in order for the test to get access to it
     {
         private GenericPizzaFactory _pizzaFactory = new GenericPizzaFactory();
 
@@ -16,6 +16,18 @@ namespace PizzaWorld.Domain.Models // the point is to be specific as to where th
         public Order()
         {
             Pizzas = new List<APizzaModel>();
+        }
+
+        public int CompareTo(Order order)
+        {
+            if (EntityId < order.EntityId)
+            {
+                return 1;
+            }
+            else
+            {
+                return -1;
+            }
         }
 
         public void PrintPriceOfLastPizza()
@@ -41,11 +53,35 @@ namespace PizzaWorld.Domain.Models // the point is to be specific as to where th
 
             foreach(var p in Pizzas)
             {
-                sb.AppendLine(p.ToString());
+                sb.AppendLine("" + p);
             }
 
             System.Console.WriteLine("Your order includes the following pizzas:");
             System.Console.WriteLine(sb);
+        }
+
+        private string GetPriceInParenthesis(decimal number)
+        {
+            return " ($" + number + ")";
+        }
+
+        public override string ToString()
+        {
+            var sb = new StringBuilder();
+            APizzaModel currentPizza;
+
+            for (var p = 0; p < Pizzas.Count; p++)
+            {
+                currentPizza = Pizzas[p];
+
+                sb.AppendLine("Pizza #" + (p+1));
+                sb.AppendLine("- Type: " + currentPizza + GetPriceInParenthesis(currentPizza.TypePrice));
+                sb.AppendLine("- Crust: " + currentPizza.Crust + GetPriceInParenthesis(currentPizza.Crust.Price));
+                sb.AppendLine("- Size: " + currentPizza.Size + GetPriceInParenthesis(currentPizza.Size.Price));
+            }
+            sb.AppendLine("\nTotal Price: $" + GetCurrentTally());
+
+            return sb.ToString();
         }
 
         public void ChangeLastPizzaSize(string sizeName, List<Size> availSizes)

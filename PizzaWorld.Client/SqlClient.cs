@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using PizzaWorld.Domain.Models;
 using PizzaWorld.Storing;
+using Microsoft.EntityFrameworkCore;
 
 namespace PizzaWorld.Client
 {
@@ -27,6 +28,77 @@ namespace PizzaWorld.Client
             return ReadOne(store.Name).Orders;
         }
 
+        private void DisplayOrders(List<Order> orders)
+        {
+            System.Console.WriteLine("Note: Newest Orders are Shown First\n");
+
+            orders.Sort();
+
+            for (var o = 0; o < orders.Count; o++)
+            {
+                System.Console.WriteLine("Order #" + (o+1));
+                System.Console.WriteLine("---------------------");
+                System.Console.WriteLine(orders[o]);
+            }
+        }
+
+        public void DisplayUserOrderHistory(User user)
+        {
+            var u = _db.Users
+                        .Include(s => s.SelectedStore)
+                        .Include(u => u.Orders)
+                        .ThenInclude(o => o.Pizzas)
+                        .FirstOrDefault(u => u.EntityId == user.EntityId);
+
+            //u.DisplayNumberOfPastOrders();
+            //u.DisplaySelectedStore();
+
+            // Filter the user's orders with the currently selected store
+            if (u.SelectedStore.Name == "First Store")
+            {
+                var store1 = _db.Stores
+                                .Include(o => o.Orders)
+                                .FirstOrDefault(s1 => s1.EntityId == 1);
+
+                List<Order> userOrdersFromFirstStore = new List<Order>();
+
+                for (var i = 0; i < store1.Orders.Count; i++)
+                {
+                    foreach (var usr in u.Orders)
+                    {
+                        if (usr.EntityId == store1.Orders[i].EntityId)
+                        {
+                            userOrdersFromFirstStore.Add(usr);
+                        }
+                    }
+                }
+
+                //System.Console.WriteLine("Number of Orders from First Store: " + userOrdersFromFirstStore.Count);
+                DisplayOrders(userOrdersFromFirstStore);
+            }
+            else if (u.SelectedStore.Name == "Second Store")
+            {
+                var store2 = _db.Stores
+                                .Include(o => o.Orders)
+                                .FirstOrDefault(s2 => s2.EntityId == 2);
+
+                List<Order> userOrdersFromSecondStore = new List<Order>();
+
+                for (var i = 0; i < store2.Orders.Count; i++)
+                {
+                    foreach (var usr in u.Orders)
+                    {
+                        if (usr.EntityId == store2.Orders[i].EntityId)
+                        {
+                            userOrdersFromSecondStore.Add(usr);
+                        }
+                    }
+                }
+
+                //System.Console.WriteLine("Number of Orders from Second Store: " + userOrdersFromSecondStore.Count);
+                DisplayOrders(userOrdersFromSecondStore);
+            }
+        }
 
         // Stores
 
