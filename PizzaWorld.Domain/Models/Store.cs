@@ -27,7 +27,7 @@ namespace PizzaWorld.Domain.Models // the point is to be specific as to where th
             Orders.Add(new Order());
         }
 
-        bool DeleteOrder(Order order) // "tell me what to delete"
+        public bool DeleteOrder(Order order) // "tell me what to delete"
         {
             try
             {

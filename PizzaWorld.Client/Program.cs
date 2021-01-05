@@ -183,6 +183,7 @@ namespace PizzaWorld.Client
 
             if (submitInput == "d")
             {
+                user.SelectedStore.DeleteOrder(currentOrder);
                 System.Console.WriteLine("Thank you. Come again!");
             }
         }
