@@ -60,7 +60,7 @@ namespace PizzaWorld.Storing /* DON'T FORGET TO REMOVE the PW BEFORE COMMITTING 
                 {
                     new Size { EntityId = 1, Name = "Small", Inches = 10, Price = .99m },
                     new Size { EntityId = 2, Name = "Medium", Inches = 12, Price = 2.99m },
-                    new Size { EntityId = 3, Name = "Large", Inches = 12, Price = 4.99m }
+                    new Size { EntityId = 3, Name = "Large", Inches = 14, Price = 4.99m }
                 }
             );
             builder.Entity<Topping>().HasData(new List<Topping>()

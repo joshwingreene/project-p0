@@ -9,7 +9,7 @@ namespace PizzaWorld.Testing
         private void Test_UserExists()
         {
             // arrange
-            var sut = new User();
+            var sut = new User("test", "12345");
 
             // act
             var actual = sut;
