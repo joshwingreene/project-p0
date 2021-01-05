@@ -8,49 +8,11 @@ namespace PizzaWorld.Client
 {
     class Program
     {
-        private static readonly ClientSingleton _client = ClientSingleton.Instance;
-
         private static readonly SqlClient _sql = new SqlClient();
-
-        /*
-        public Program()
-        {
-            _client = new ClientSingleton.Instance;
-        }
-        */
 
         static void Main(string[] args)
         {
-            //var cs = ClientSingleton.Instance; // want avilable during the runtime
-            
-            //_client.MakeAStore();
-
-            /*
-            PrintAllStores();
-            System.Console.WriteLine(_client.SelectStore());
-            */
-
             UserView();
-        }
-
-        /*
-        static IEnumerable<Store> GetAllStores()
-        {
-            return new List<Store>()
-            {
-                new Store(), // C# allows you to do this (adds one Store object to the List)
-                new Store()
-            };
-            
-        }
-        */
-
-        static void PrintAllStores()
-        {
-            foreach(var store in _client.Stores)
-            {
-                System.Console.WriteLine(store);
-            }
         }
 
         static void PrintAllStoresWithEF()
@@ -73,6 +35,12 @@ namespace PizzaWorld.Client
             {
                 System.Console.WriteLine(pizzaType);
             }
+        }
+
+        private static void PrintTallyWithMsg(string msg, Order order)
+        {
+            System.Console.WriteLine("\n" + msg + ":\n");
+            System.Console.WriteLine(order);
         }
 
         private static void CreateAndProcessOrder(User user) // TODO: Thinking about having the list of parts be sent as params
@@ -108,8 +76,8 @@ namespace PizzaWorld.Client
                         break;
                 }
                 currentOrder.ChangeLastPizzaSize(sizeInput, availableSizes); // Reason for no if - editing a pizza to small and then back to medium
-                currentOrder.PrintPriceOfLastPizza();
-                System.Console.WriteLine("Current Order Total: " + currentOrder.GetCurrentTally());
+                //currentOrder.PrintPriceOfLastPizza();
+                PrintTallyWithMsg("Current Order Total", currentOrder);
 
                 do
                 {
@@ -154,7 +122,7 @@ namespace PizzaWorld.Client
                                 }
                                 string crustChoiceInput = Console.ReadLine();
                                 currentOrder.ChangePizzaCrust(pizzaNumInput, crustChoiceInput, availableCrusts);
-                                System.Console.WriteLine("Updated Order Tally: " + currentOrder.GetCurrentTally());
+                                PrintTallyWithMsg("Updated Order Tally", currentOrder);
                                 break;
                             case "b":
                                 System.Console.WriteLine(selectedPizza.ToString() + "'s Currrent Size: " + selectedPizza.Size.ToString());
@@ -165,11 +133,11 @@ namespace PizzaWorld.Client
                                 }
                                 string sizeChoiceInput = Console.ReadLine();
                                 currentOrder.ChangePizzaSize(pizzaNumInput, sizeChoiceInput, availableSizes);
-                                System.Console.WriteLine("Updated Order Tally: " + currentOrder.GetCurrentTally());
+                                PrintTallyWithMsg("Updated Order Tally", currentOrder);
                                 break;
                             case "c":
                                 currentOrder.RemovePizza(pizzaNumInput);
-                                System.Console.WriteLine("Updated Order Tally: " + currentOrder.GetCurrentTally());
+                                PrintTallyWithMsg("Updated Order Tally", currentOrder);
                                 break;
                             default:
                                 break;
@@ -183,10 +151,10 @@ namespace PizzaWorld.Client
             if (submitInput == "c")
             {
                 // Display final tally and associated message
-                System.Console.WriteLine("Final Order Total: " + currentOrder.GetCurrentTally());
+                PrintTallyWithMsg("Final Order Total", currentOrder);
 
                 _sql.Update(user.SelectedStore);
-                System.Console.WriteLine(user);
+                //System.Console.WriteLine(user);
 
                 do
                 {

@@ -77,9 +77,9 @@ namespace PizzaWorld.Domain.Models // the point is to be specific as to where th
                 sb.AppendLine("Pizza #" + (p+1));
                 sb.AppendLine("- Type: " + currentPizza + GetPriceInParenthesis(currentPizza.TypePrice));
                 sb.AppendLine("- Crust: " + currentPizza.Crust + GetPriceInParenthesis(currentPizza.Crust.Price));
-                sb.AppendLine("- Size: " + currentPizza.Size + GetPriceInParenthesis(currentPizza.Size.Price));
+                sb.AppendLine("- Size: " + currentPizza.Size + GetPriceInParenthesis(currentPizza.Size.Price) + "\n");
             }
-            sb.AppendLine("\nTotal Price: $" + GetCurrentTally());
+            sb.AppendLine("Total Price: $" + GetCurrentTally());
 
             return sb.ToString();
         }
