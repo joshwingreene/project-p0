@@ -178,7 +178,7 @@ namespace PizzaWorld.Client
                     switch (submitInput)
                     {
                         case "a":
-                            PrintMessage("Thank you. Come again!");
+                            PrintMessage($"Thank you for choosing {user.SelectedStore}. Come again!");
                             break;
                         case "b":
                             _sql.DisplayUserOrderHistory(user);
@@ -218,12 +218,12 @@ namespace PizzaWorld.Client
 
             PrintMessage("What are you?");
             DisplayOptions(new string[] { 
-                "c) Customer", 
-                "s) Store" 
+                "a) Customer", 
+                "b) Store" 
             });
             string identityInput = Console.ReadLine();
 
-            if (identityInput == "c") // Customer
+            if (identityInput == "a") // Customer
             {
                 PrintMessage("Please sign in or create an account:");
                 DisplayOptions(new string[] { 
@@ -287,9 +287,40 @@ namespace PizzaWorld.Client
 
                 CreateAndProcessOrder(user);
             }
-            else if (identityInput == "s")
+            else if (identityInput == "b") // Store
             {
-                Console.WriteLine("You are a Store");
+                PrintAllStoresWithEF();
+
+                var SelectedStore = _sql.SelectStore();
+
+                string storeActionInput = "";
+
+                do
+                {
+                    Console.WriteLine("What would you like to do next?");
+                    DisplayOptions(new string[] { 
+                        "a) Show Order History", 
+                        "b) Show Sales History",
+                        "c) Exit" 
+                    });
+                    storeActionInput = Console.ReadLine();
+
+                    switch(storeActionInput)
+                    {
+                        case "a":
+                            _sql.DisplayStoreOrderHistory(SelectedStore);
+                            break;
+                        case "b":
+                            Console.WriteLine("Sales History");
+                            break;
+                        case "c":
+                            PrintMessage($"Thank you for choosing {SelectedStore}. Come again!");
+                            break;
+                        default:
+                            break;
+                    }
+                } while (storeActionInput != "c");
+                
             }
         }
     }

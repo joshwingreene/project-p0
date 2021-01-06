@@ -100,6 +100,16 @@ namespace PizzaWorld.Client
             }
         }
 
+        public void DisplayStoreOrderHistory(Store store)
+        {
+            var st = _db.Stores
+                    .Include(o => o.Orders).ThenInclude(p => p.Pizzas).ThenInclude(c => c.Crust)
+                    .Include(o => o.Orders).ThenInclude(p => p.Pizzas).ThenInclude(s => s.Size)
+                    .FirstOrDefault(s1 => s1.EntityId == store.EntityId);
+
+            DisplayOrders(st.Orders);
+        }
+
         // Stores
 
         public IEnumerable<Store> ReadStores()
