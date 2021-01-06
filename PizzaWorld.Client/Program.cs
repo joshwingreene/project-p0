@@ -297,7 +297,7 @@ namespace PizzaWorld.Client
 
                 do
                 {
-                    Console.WriteLine("What would you like to do next?");
+                    PrintMessage("What would you like to do next?");
                     DisplayOptions(new string[] { 
                         "a) Show Order History", 
                         "b) Show Sales History",
@@ -311,10 +311,10 @@ namespace PizzaWorld.Client
                             _sql.DisplayStoreOrderHistory(SelectedStore);
                             break;
                         case "b":
-                            Console.WriteLine("Sales History");
+                            _sql.DisplayStoreSales(SelectedStore);
                             break;
                         case "c":
-                            PrintMessage($"Thank you for choosing {SelectedStore}. Come again!");
+                            PrintMessage("Thank you. Come again!");
                             break;
                         default:
                             break;

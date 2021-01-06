@@ -4,6 +4,7 @@ using System.Linq;
 using PizzaWorld.Domain.Models;
 using PizzaWorld.Storing;
 using Microsoft.EntityFrameworkCore;
+using PizzaWorld.Domain.Abstracts;
 
 namespace PizzaWorld.Client
 {
@@ -11,15 +12,7 @@ namespace PizzaWorld.Client
     {
         private readonly PizzaWorldContext _db = new PizzaWorldContext();
 
-        public SqlClient()
-        {
-            /*
-            if (ReadStores().Count() == 0)
-            {
-                CreateStore();
-            }
-            */
-        }
+        public SqlClient() {}
 
         // Orders
 
@@ -108,6 +101,48 @@ namespace PizzaWorld.Client
                     .FirstOrDefault(s1 => s1.EntityId == store.EntityId);
 
             DisplayOrders(st.Orders);
+        }
+
+        private void DisplaySalesForGivenPizza(string pizzaType, List<APizzaModel> pizzas)
+        {
+            Console.WriteLine($"\nTotal Number of {pizzaType}s Sold: {pizzas.Count}");
+            var totalRevenue = 0.0m;
+
+            foreach (var p in pizzas)
+            {
+                totalRevenue += p.GetTotalPrice();
+            }
+
+            Console.WriteLine($"Total Revenue from {pizzaType}: ${totalRevenue}");
+        }
+
+        private void DisplaySales(List<Order> orders)
+        {
+            // Filter into three piles of pizzas
+            List<APizzaModel> meatPizzas = new List<APizzaModel>();
+            List<APizzaModel> pineapplePizzas = new List<APizzaModel>();
+            List<APizzaModel> gumboPizzas = new List<APizzaModel>();
+
+            foreach (var o in orders)
+            {
+                meatPizzas.AddRange(o.Pizzas.FindAll(p => p.Name == "Meat Pizza"));
+                pineapplePizzas.AddRange(o.Pizzas.FindAll(p => p.Name == "Pineapple Pizza"));
+                gumboPizzas.AddRange(o.Pizzas.FindAll(p => p.Name == "Gumbo Pizza"));
+            }
+
+            DisplaySalesForGivenPizza("Meat Pizza", meatPizzas);
+            DisplaySalesForGivenPizza("Pineapple Pizza", pineapplePizzas);
+            DisplaySalesForGivenPizza("Gumbo Pizza", gumboPizzas);            
+        }
+
+        public void DisplayStoreSales(Store store)
+        {
+            var st = _db.Stores
+                    .Include(o => o.Orders).ThenInclude(p => p.Pizzas).ThenInclude(c => c.Crust)
+                    .Include(o => o.Orders).ThenInclude(p => p.Pizzas).ThenInclude(s => s.Size)
+                    .FirstOrDefault(s1 => s1.EntityId == store.EntityId);
+
+            DisplaySales(st.Orders);
         }
 
         // Stores
