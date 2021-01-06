@@ -56,7 +56,7 @@ namespace PizzaWorld.Domain.Models // the point is to be specific as to where th
                 sb.AppendLine("" + p);
             }
 
-            System.Console.WriteLine("Your order includes the following pizzas:");
+            System.Console.WriteLine("\nYour order includes the following pizzas:\n");
             System.Console.WriteLine(sb);
         }
 

@@ -17,6 +17,8 @@ namespace PizzaWorld.Client
 
         static void PrintAllStoresWithEF()
         {
+            PrintMessage("Select a Store:");
+
             foreach (var store in _sql.ReadStores())
             {
                 System.Console.WriteLine(store);
@@ -58,11 +60,11 @@ namespace PizzaWorld.Client
 
             do
             {
-                System.Console.WriteLine("Available Pizzas:");
+                PrintMessage("Available Pizzas:");
                 PrintAvailablePizzaTypes();
-                System.Console.WriteLine("Enter a type of pizza to add to your order.");
+                PrintMessage("Enter a type of pizza to add to your order.");
                 string typeInput = Console.ReadLine();
-                System.Console.WriteLine("Enter the size for your pizza");
+                PrintMessage("Enter the size for your pizza");
                 string sizeInput = Console.ReadLine();
                 
                 switch (typeInput)
@@ -109,18 +111,20 @@ namespace PizzaWorld.Client
 
                         var selectedPizza = currentOrder.Pizzas.ElementAtOrDefault(pizzaNumInput);
 
-                        System.Console.WriteLine("What do you want to do with this pizza?");
-                        System.Console.WriteLine("a) Change the type of crust");
-                        System.Console.WriteLine("b) Change the size");
-                        System.Console.WriteLine("c) Remove it");
+                        PrintMessage("What do you want to do with this pizza?");
+                        DisplayOptions(new string[] { 
+                            "a) Change the type of crust", 
+                            "b) Change the size",
+                            "c) Remove it"
+                        });
                         
                         string editOptionInput = Console.ReadLine();
 
                         switch (editOptionInput)
                         {
                             case "a": // TODO: Use one common method for this two cases
-                                System.Console.WriteLine(selectedPizza.ToString() + "'s Current Crust: " + selectedPizza.Crust.ToString());
-                                System.Console.WriteLine("What do you want to change the Crust to");
+                                PrintMessage(selectedPizza.ToString() + "'s Current Crust: " + selectedPizza.Crust.ToString());
+                                PrintMessage("What do you want to change the Crust to");
                                 foreach (var c in availableCrusts)
                                 {
                                     System.Console.WriteLine(c);
@@ -130,8 +134,8 @@ namespace PizzaWorld.Client
                                 PrintTallyWithMsg("Updated Order Tally", currentOrder);
                                 break;
                             case "b":
-                                System.Console.WriteLine(selectedPizza.ToString() + "'s Current Size: " + selectedPizza.Size.ToString());
-                                System.Console.WriteLine("What do you want to change the Size to?");
+                                PrintMessage(selectedPizza.ToString() + "'s Current Size: " + selectedPizza.Size.ToString());
+                                PrintMessage("What do you want to change the Size to?");
                                 foreach (var c in availableSizes)
                                 {
                                     System.Console.WriteLine(c);
@@ -164,15 +168,17 @@ namespace PizzaWorld.Client
                 do
                 {
                     System.Console.WriteLine("Thank you for your order. Will that be all?");
-                    System.Console.WriteLine("a) Yes");
-                    System.Console.WriteLine("b) Show order history");
-                    System.Console.WriteLine("c) Make another order");
+                    DisplayOptions(new string[] { 
+                        "a) Yes", 
+                        "b) Show order history",
+                        "c) Make another order"
+                    });
                     submitInput = Console.ReadLine();
 
                     switch (submitInput)
                     {
                         case "a":
-                            System.Console.WriteLine("Thank you. Come again!");
+                            PrintMessage("Thank you. Come again!");
                             break;
                         case "b":
                             _sql.DisplayUserOrderHistory(user);
@@ -189,76 +195,102 @@ namespace PizzaWorld.Client
             if (submitInput == "d")
             {
                 user.SelectedStore.DeleteOrder(currentOrder);
-                System.Console.WriteLine("Thank you. Come again!");
+                PrintMessage("Thank you. Come again!");
             }
+        }
+
+        private static void DisplayOptions(string[] givenOptions)
+        {
+            foreach (var o in givenOptions)
+            {
+                Console.WriteLine(o);
+            }
+        }
+
+        private static void PrintMessage(string message)
+        {
+            Console.WriteLine("\n" + message);
         }
 
         static void UserView()
         {
-            Console.WriteLine("Welcome to PizzaWorld!");
-            Console.WriteLine("a) Sign In");
-            Console.WriteLine("b) Create Account");
-            string accountInput = Console.ReadLine();
+            PrintMessage("Welcome to PizzaWorld!");
 
-            User user = null;
-            string usernameInput = "";
-            string passwordInput = "";
+            PrintMessage("What are you?");
+            DisplayOptions(new string[] { 
+                "c) Customer", 
+                "s) Store" 
+            });
+            string identityInput = Console.ReadLine();
 
-            if (accountInput == "a")
+            if (identityInput == "c") // Customer
             {
-                do
-                {
-                    Console.WriteLine("Enter Username");
-                    usernameInput = Console.ReadLine();
+                PrintMessage("Please sign in or create an account:");
+                DisplayOptions(new string[] { 
+                    "a) Sign In", 
+                    "b) Create Account" 
+                });
 
-                    Console.WriteLine("Enter Password");
+                string accountInput = Console.ReadLine();
+
+                User user = null;
+                string usernameInput = "";
+                string passwordInput = "";
+
+                if (accountInput == "a")
+                {
+                    do
+                    {
+                        PrintMessage("Enter Username");
+                        usernameInput = Console.ReadLine();
+
+                        PrintMessage("Enter Password");
+                        passwordInput = Console.ReadLine();
+
+                        user = _sql.GetUserIfCredentialsAreValid(usernameInput, passwordInput);
+
+                        if (user == null) {
+                            PrintMessage("Your credentials were incorrect. Please try again");
+                        }
+                        
+                    } while (user == null);
+                }
+                else if (accountInput == "b")
+                {
+                    bool AlreadyExists = false;
+                    do
+                    {
+                        PrintMessage("Select Username");
+                        usernameInput = Console.ReadLine();
+
+                        AlreadyExists = _sql.CheckIfUsernameExists(usernameInput);
+
+                        if (AlreadyExists)
+                        {
+                            PrintMessage("Your chosen username has been taken. Please try another one");
+                        }
+
+                    } while (AlreadyExists);
+
+                    PrintMessage("Select Password");
                     passwordInput = Console.ReadLine();
 
-                    user = _sql.GetUserIfCredentialsAreValid(usernameInput, passwordInput);
+                    user = new User(usernameInput, passwordInput);
+                    _sql.SaveUser(user);
+                }
 
-                    if (user == null) {
-                        Console.WriteLine("Your credentials were incorrect. Please try again");
-                    }
-                    
-                } while (user == null);
+                PrintAllStoresWithEF();
+                
+                user.SelectedStore = _sql.SelectStore();
+
+                _sql.Update(user.SelectedStore); // this line is just in case the user cancels their order
+
+                CreateAndProcessOrder(user);
             }
-            else if (accountInput == "b")
+            else if (identityInput == "s")
             {
-                bool AlreadyExists = false;
-                do
-                {
-                    Console.WriteLine("Select Username");
-                    usernameInput = Console.ReadLine();
-
-                    AlreadyExists = _sql.CheckIfUsernameExists(usernameInput);
-
-                    if (AlreadyExists)
-                    {
-                        Console.WriteLine("Your chosen username has been taken. Please try another one");
-                    }
-
-                } while (AlreadyExists);
-
-                Console.WriteLine("Select Password");
-                passwordInput = Console.ReadLine();
-
-                user = new User(usernameInput, passwordInput);
-                _sql.SaveUser(user);
+                Console.WriteLine("You are a Store");
             }
-
-            //var user = new User();
-
-            //_sql.SaveUser(user);
-
-            //PrintAllStores();
-
-            PrintAllStoresWithEF();
-            
-            user.SelectedStore = _sql.SelectStore();
-
-            _sql.Update(user.SelectedStore); // this line is just in case the user cancels their order
-
-            CreateAndProcessOrder(user);
         }
     }
 }
