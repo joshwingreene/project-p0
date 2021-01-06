@@ -10,11 +10,11 @@
             "request": "launch",
             "preLaunchTask": "build",
             // If you have changed target frameworks, make sure to update the program path.
-            "program": "${workspaceFolder}/PizzaWorld.Client/bin/Debug/netcoreapp3.1/PizzaWorld.Client.dll",
+            "program": "${workspaceFolder}/PizzaWorld.Client/bin/Debug/net5.0/PizzaWorld.Client.dll",
             "args": [],
             "cwd": "${workspaceFolder}/PizzaWorld.Client",
             // For more information about the 'console' field, see https://aka.ms/VSCode-CS-LaunchJson-Console
-            "console": "internalConsole",
+            "console": "integratedTerminal",
             "stopAtEntry": false
         },
         {

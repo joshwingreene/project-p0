@@ -28,7 +28,8 @@ namespace PizzaWorld.Client
             List<string> availablePizzaTypes = new List<string>
             {
                 "Meat",
-                "Pineapple"
+                "Pineapple",
+                "Gumbo"
             };
 
             foreach (var pizzaType in availablePizzaTypes)
@@ -72,6 +73,9 @@ namespace PizzaWorld.Client
                     case "Pineapple":
                         currentOrder.MakePineapplePizza(availableCrusts, availableSizes, availableToppings);
                         break;
+                    case "Gumbo":
+                        currentOrder.MakeGumboPizza(availableCrusts, availableSizes, availableToppings);
+                        break;
                     default:
                         break;
                 }
@@ -99,8 +103,9 @@ namespace PizzaWorld.Client
                     if (submitInput == "b")
                     {
                         currentOrder.PrintPizzas();
-                        System.Console.WriteLine("Which pizza would you like to edit? (use numbers, starting from 0)");
+                        System.Console.WriteLine("Which pizza would you like to edit? (use numbers, starting from 1)");
                         int.TryParse(Console.ReadLine(), out int pizzaNumInput);
+                        pizzaNumInput = pizzaNumInput - 1;
 
                         var selectedPizza = currentOrder.Pizzas.ElementAtOrDefault(pizzaNumInput);
 
@@ -114,7 +119,7 @@ namespace PizzaWorld.Client
                         switch (editOptionInput)
                         {
                             case "a": // TODO: Use one common method for this two cases
-                                System.Console.WriteLine(selectedPizza.ToString() + "'s Currrent Crust: " + selectedPizza.Crust.ToString());
+                                System.Console.WriteLine(selectedPizza.ToString() + "'s Current Crust: " + selectedPizza.Crust.ToString());
                                 System.Console.WriteLine("What do you want to change the Crust to");
                                 foreach (var c in availableCrusts)
                                 {
@@ -125,7 +130,7 @@ namespace PizzaWorld.Client
                                 PrintTallyWithMsg("Updated Order Tally", currentOrder);
                                 break;
                             case "b":
-                                System.Console.WriteLine(selectedPizza.ToString() + "'s Currrent Size: " + selectedPizza.Size.ToString());
+                                System.Console.WriteLine(selectedPizza.ToString() + "'s Current Size: " + selectedPizza.Size.ToString());
                                 System.Console.WriteLine("What do you want to change the Size to?");
                                 foreach (var c in availableSizes)
                                 {

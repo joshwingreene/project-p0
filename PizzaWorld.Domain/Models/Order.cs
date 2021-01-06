@@ -111,7 +111,7 @@ namespace PizzaWorld.Domain.Models // the point is to be specific as to where th
                 case "Small":
                     selectedPizza.Size = availSizes.Find(c => c.Name == "Small");
                     break;
-                case "Regular":
+                case "Medium":
                     selectedPizza.Size = availSizes.Find(c => c.Name == "Medium");
                     break;
                 case "Large":
@@ -164,6 +164,12 @@ namespace PizzaWorld.Domain.Models // the point is to be specific as to where th
         public void MakePineapplePizza(List<Crust> availCrusts, List<Size> availSizes, List<Topping> availToppings)
         {
             Pizzas.Add(_pizzaFactory.Make<PineapplePizza>());
+            AddMajorPizzaParts(Pizzas.Last(), availCrusts, availSizes, availToppings);
+        }
+
+        public void MakeGumboPizza(List<Crust> availCrusts, List<Size> availSizes, List<Topping> availToppings)
+        {
+            Pizzas.Add(_pizzaFactory.Make<GumboPizza>());
             AddMajorPizzaParts(Pizzas.Last(), availCrusts, availSizes, availToppings);
         }
     }

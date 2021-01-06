@@ -54,7 +54,7 @@ namespace PizzaWorld.Client
             //u.DisplaySelectedStore();
 
             // Filter the user's orders with the currently selected store
-            if (u.SelectedStore.Name == "First Store")
+            if (u.SelectedStore.Name == "Pizza Plaza")
             {
                 var store1 = _db.Stores
                                 .Include(o => o.Orders)
@@ -76,7 +76,7 @@ namespace PizzaWorld.Client
                 //System.Console.WriteLine("Number of Orders from First Store: " + userOrdersFromFirstStore.Count);
                 DisplayOrders(userOrdersFromFirstStore);
             }
-            else if (u.SelectedStore.Name == "Second Store")
+            else if (u.SelectedStore.Name == "Pizza Bonanza")
             {
                 var store2 = _db.Stores
                                 .Include(o => o.Orders)

@@ -20,7 +20,8 @@ namespace PizzaWorld.Domain.Models
             {
                 new PizzaTopping(this, availableToppings.Find(t => t.Name == "Cheese")),
                 new PizzaTopping(this, availableToppings.Find(t => t.Name == "Pepperoni")),
-                new PizzaTopping(this, availableToppings.Find(t => t.Name == "Pineapple"))
+                new PizzaTopping(this, availableToppings.Find(t => t.Name == "Pineapple")),
+                new PizzaTopping(this, availableToppings.Find(t => t.Name == "Tomato Sauce"))
             };
         }
     }

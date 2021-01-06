@@ -1,17 +1,17 @@
-using System.Collections.Generic;
 using PizzaWorld.Domain.Abstracts;
+using System.Collections.Generic;
 
 namespace PizzaWorld.Domain.Models
 {
-    public class MeatPizza : APizzaModel
+    public class GumboPizza : APizzaModel
     {
         protected override void AddName()
         {
-            Name = "Meat Pizza";
+            Name = "Gumbo Pizza";
         }
         protected override void AddTypePrice()
         {
-            TypePrice = 5.99m;
+            TypePrice = 7.99m;
         }
 
         public override void AddToppings(List<Topping> availableToppings)
@@ -19,9 +19,9 @@ namespace PizzaWorld.Domain.Models
             PizzaToppings = new List<PizzaTopping>
             {
                 new PizzaTopping(this, availableToppings.Find(t => t.Name == "Cheese")),
-                new PizzaTopping(this, availableToppings.Find(t => t.Name == "Pepperoni")),
-                new PizzaTopping(this, availableToppings.Find(t => t.Name == "Sausage")),
                 new PizzaTopping(this, availableToppings.Find(t => t.Name == "Tomato Sauce")),
+                new PizzaTopping(this, availableToppings.Find(t => t.Name == "Shrimp")),
+                new PizzaTopping(this, availableToppings.Find(t => t.Name == "Crab"))
             };
         }
     }

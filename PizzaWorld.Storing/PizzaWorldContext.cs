@@ -45,8 +45,8 @@ namespace PizzaWorld.Storing /* DON'T FORGET TO REMOVE the PW BEFORE COMMITTING 
         {
             builder.Entity<Store>().HasData(new List<Store>()
                 {
-                    new Store { EntityId = 1, Name = "First Store"},
-                    new Store { EntityId = 2, Name = "Second Store"}
+                    new Store { EntityId = 1, Name = "Pizza Plaza"},
+                    new Store { EntityId = 2, Name = "Pizza Bonanza"}
                 }
             );
             builder.Entity<Crust>().HasData(new List<Crust>()
@@ -68,7 +68,10 @@ namespace PizzaWorld.Storing /* DON'T FORGET TO REMOVE the PW BEFORE COMMITTING 
                     new Topping { EntityId = 1, Name = "Cheese"},
                     new Topping { EntityId = 2, Name = "Pepperoni"},
                     new Topping { EntityId = 3, Name = "Sausage"},
-                    new Topping { EntityId = 4, Name = "Pineapple"}
+                    new Topping { EntityId = 4, Name = "Pineapple"},
+                    new Topping { EntityId = 5, Name = "Tomato Sauce"},
+                    new Topping { EntityId = 6, Name = "Shrimp"},
+                    new Topping { EntityId = 7, Name = "Crab"}
                 }
             );
         }
