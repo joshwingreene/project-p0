@@ -114,7 +114,10 @@ namespace PizzaWorld.Testing
                     new Topping { EntityId = 1, Name = "Cheese"},
                     new Topping { EntityId = 2, Name = "Pepperoni"},
                     new Topping { EntityId = 3, Name = "Sausage"},
-                    new Topping { EntityId = 4, Name = "Pineapple"}
+                    new Topping { EntityId = 4, Name = "Pineapple"},
+                    new Topping { EntityId = 5, Name = "Tomato Sauce"},
+                    new Topping { EntityId = 6, Name = "Shrimp"},
+                    new Topping { EntityId = 7, Name = "Crab"}
             };
 
             // act
@@ -122,7 +125,7 @@ namespace PizzaWorld.Testing
             var actual = sut;
 
             // assert
-            Assert.True(actual.PizzaToppings.Count == 3);
+            Assert.True(actual.PizzaToppings.Count == 4);
         }
 
         [Fact]
